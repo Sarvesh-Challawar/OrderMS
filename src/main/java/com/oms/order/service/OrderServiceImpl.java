@@ -34,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 	
-	private static int o;
+	private int o;
 	
 	@Autowired
 	private OrderRepository orderRepository;
@@ -42,9 +42,9 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private ProductsOrderedRepository prodOrderedRepository;
 	
-	static {
-		o=100;
-	}
+//	static {
+//		o=100;
+//	}
 
 	//View all orders service
 	@Override
@@ -98,15 +98,17 @@ public class OrderServiceImpl implements OrderService {
 		Order order=new Order();
 		
 		//Method1
+		o=100;
 		while(true)
 		{
-			String id="O"+o++;
+			String id="O"+o;
 			Order orderCheck=orderRepository.findByOrderId(id);
 			if(orderCheck == null)
 			{
 				order.setOrderId(id);
 				break;
 			}
+			o++;
 		}
 		
 		//Method2
@@ -131,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
 		order.setDate(LocalDate.now());
 		order.setAddress(orderDto.getAddress());
 		order.setStatus("PLACED");
-			
+		
 		List<ProductsOrdered> productsOrderedList=new ArrayList<>();
 		for(int i=0;i<cartList.size();i++)
 		{

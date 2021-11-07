@@ -121,9 +121,9 @@ public class OrderAPI {
 			}
 			String buyerMode=new RestTemplate().getForObject(userUri+"/buyer/getBuyerMode/"+buyerId, String.class);
 			PlacedOrderDTO orderPlaced=orderService.placeOrder(buyerMode, cartList, productList, order);
+			System.out.println(orderPlaced);
 			for(CartDTO cartDto : cartList)
 			{
-				System.out.println(cartDto.getProdId()+" "+cartDto.getQuantity());
 				new RestTemplate().put(productUri+"/updateStock/delete/"+cartDto.getProdId()+"/"+cartDto.getQuantity(), orderPlaced);
 				new RestTemplate().delete(userUri+"/buyer/removeItemFromCart/"+buyerId+"/"+cartDto.getProdId());
 			}
